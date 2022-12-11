@@ -8,6 +8,7 @@ import re
 app = FastAPI()
 summarizer = pipeline("summarization", model="facebook/bart-base")
 
+'''
 origins = [
     "*"
 ]
@@ -18,6 +19,7 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
+'''
 
 def preProcess_data(text): #cleaning the data
     
