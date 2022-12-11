@@ -5,7 +5,7 @@ import re
 
 
 app = FastAPI()
-summarizer = pipeline("summarization", model="facebook/bart-large-cnn", config ='config.json' )
+summarizer = pipeline("summarization", model="sshleifer/distilbart-cnn-6-6")
 
 def preProcess_data(text): #cleaning the data
     
