@@ -1,11 +1,23 @@
 from fastapi import FastAPI, Form
 from transformers import pipeline
+from fastapi.middleware.cors import CORSMiddleware
 from starlette.responses import HTMLResponse 
 import re
 
 
 app = FastAPI()
-summarizer = pipeline("summarization", model="sshleifer/distilbart-cnn-6-6")
+summarizer = pipeline("summarization", model="facebook/bart-base")
+
+origins = [
+    "*"
+]
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=origins,
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 def preProcess_data(text): #cleaning the data
     
