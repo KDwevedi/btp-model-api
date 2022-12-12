@@ -1,24 +1,42 @@
 from fastapi import FastAPI, Form
 from transformers import pipeline
 from fastapi.middleware.cors import CORSMiddleware
-from starlette.responses import HTMLResponse 
+from starlette.responses import HTMLResponse
+from starlette.middleware import Middleware
+from starlette.middleware.cors import CORSMiddleware
 import re
 
-
-app = FastAPI()
-summarizer = pipeline("summarization", model="facebook/bart-base")
-
-
-origins = [
-    "*"
+middleware = [
+    Middleware(
+        CORSMiddleware,
+        allow_origins=['*'],
+        allow_credentials=True,
+        allow_methods=['*'],
+        allow_headers=['*']
+    )
 ]
-app.add_middleware(
-    CORSMiddleware,
-    allow_origins=origins,
-    allow_credentials=True,
-    allow_methods=["*"],
-    allow_headers=["*"],
-)
+
+app = FastAPI(middleware=middleware)
+summarizer = pipeline("summarization", model="pszemraj/long-t5-tglobal-base-16384-book-summary")
+
+
+# origins = [
+#     "https://127.0.0.1:*",
+#     "http://127.0.0.1:*",
+#     "http://127.0.0.1",
+#     "https://127.0.0.1",
+#     "*"
+
+# ]
+# app.add_middleware(
+#     CORSMiddleware,
+#     allow_origins=origins,
+#     #allow_origin_regex='http://127.0.0.1:*',
+#     allow_credentials=False,
+#     expose_headers=['Access-Control-Allow-Origin'],
+#     allow_methods=["*"],
+#     allow_headers=["*"],
+# )
 
 
 def preProcess_data(text): #cleaning the data
