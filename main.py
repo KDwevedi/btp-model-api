@@ -17,7 +17,7 @@ middleware = [
 ]
 
 app = FastAPI(middleware=middleware)
-summarizer = pipeline("summarization", model="pszemraj/long-t5-tglobal-base-16384-book-summary")
+summarizer = pipeline("summarization", model="facebook/bart-large-cnn")
 
 
 # origins = [
